@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Account Deletion{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <h2>Confirm Account Deletion</h2>
+    <p>Are you sure you want to delete your account?</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete Account</button>
+    </form>
+    
+    <a class="btn btn-secondary" href="{% url 'account_info' %}">Cancel</a>
+</div>
+{% endblock content %}
+
+
+
+

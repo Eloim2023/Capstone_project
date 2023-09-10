@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from saved_recipes.models import SavedRecipe
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from .forms import ExtendedCreationForm, AccountEditForm
 
 class SignUpView(CreateView):
@@ -43,4 +44,13 @@ def edit_account(request):
         form = AccountEditForm(instance=request.user)
 
     return render(request, 'accounts/edit_account.html', {'form': form})
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        # Delete the user's account and log them out
+        request.user.delete()
+        logout(request)
+        return redirect('home')  # Redirect to the homepage or any other page
+    return render(request, 'accounts/delete_account.html')  # Create a new template for the confirmation page
 
